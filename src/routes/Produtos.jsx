@@ -8,32 +8,13 @@ export default function Produtos() {
 
     document.title = "Lista de Produtos";
 
-    const [exemplo, setExemplo] = useState([{}]);
-
-    const [count, setCount] = useState(0);
-
-    useEffect(()=>{
-      console.log("Use-Effect que será sempre renderizado!");
-    });
-
-    useEffect(()=>{
-      console.log("Use-Effect que será renderizado apenas 1 vez!");
-
-        setExemplo(ListaProdutos);
-
-    },[]);
-
-    useEffect(()=>{
-      console.log("Use-Effect que será renderizado o objeto ou componente ou elemento que está no array de depenências sofrer atualização.");
-    },[count]);
-
-
-    const navigate = useNavigate();
+   
 
     return (
       <div>
           <h1>LISTA DE PRODUTOS</h1>
 
+        
 
         <div>
           <button onClick={()=> setCount(count + 1)}>COUNTER - {count}</button>
@@ -61,10 +42,12 @@ export default function Produtos() {
                   <td className={classes.tableDataStyle}>{produto.preco}</td>
                   <td className={classes.tableDataStyle}><img src={produto.img} alt={produto.desc} /></td>
                   <td className={classes.tableDataStyle}><Link to={`/editar/produtos/${produto.id}`}><Editar/></Link> | <Link to={`/excluir/produtos/${produto.id}`}><Excluir/></Link></td>
-                  <td className={classes.tableDataStyle}><Link to={"/adicionar/produtos"}><button>adicionar Produtos</button></Link></td>
                 </tr>
               ))} 
             </tbody>
+            <tr>
+            <td className={classes.tableDataStyle}><Link to={"/adicionar/produtos"}><button>adicionar Produtos</button></Link></td>
+            </tr>
             <tfoot>
               <tr>
                 <td colSpan="5" className={classes.tableDataStyle}>Total de Produtos: {ListaProdutos.length}</td>
@@ -77,3 +60,10 @@ export default function Produtos() {
     )
   }
   
+  // const [exemplo, setExemplo] = useState([{}]);
+
+  // const [count, setCount] = useState(0);
+
+  // useEffect(()=>{
+  //   console.log("Use-Effect que será sempre renderizado!");
+  // });
