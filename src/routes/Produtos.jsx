@@ -7,19 +7,24 @@ import { useEffect, useState } from "react";
 export default function Produtos() {
 
     document.title = "Lista de Produtos";
-
+    const [listaProdutoslocal, setlistaProdutoslocal] = useState([{}])
+    useEffect(()=>{
+      fetch('http://localhost:5000/produtos',{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((response)=> response.json())
+      .then((data)=>{
+          setlistaProdutoslocal(data);
+      }) 
+      .catch((err)=>console.log(err));
+    },[]);
    
 
-    return (
+    return 
       <div>
           <h1>LISTA DE PRODUTOS</h1>
-
-        
-
-        <div>
-          <button onClick={()=> setCount(count + 1)}>COUNTER - {count}</button>
-        </div>
-
         <div>
           <table className={classes.tableStyle}>
             <thead>
@@ -57,7 +62,7 @@ export default function Produtos() {
         </div>
 
       </div>
-    )
+    
   }
   
   // const [exemplo, setExemplo] = useState([{}]);
@@ -67,3 +72,7 @@ export default function Produtos() {
   // useEffect(()=>{
   //   console.log("Use-Effect que será sempre renderizado!");
   // });
+
+//   <div>
+//   <button onClick={()=> setCount(count + 1)}>COUNTER - {count}</button>
+// </div>
