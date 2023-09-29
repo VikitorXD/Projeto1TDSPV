@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 
@@ -8,7 +7,7 @@ import Produtos from './routes/Produtos.jsx';
 import EditarProdutos from './routes/EditarProdutos.jsx';
 import Error from './routes/Error.jsx';
 import ExcluirProdutos from './routes/ExcluirProdutos.jsx';
-import AddProd from './routes/AdicionarProduto.jsx';
+import InserirProduto from './routes/AdicionarProduto.jsx';
 
 const router = createBrowserRouter([
   {path: "/" , element: <App/>, errorElement: <Error/>,
@@ -17,7 +16,7 @@ const router = createBrowserRouter([
       {path: "/produtos" , element: <Produtos/>},
       {path: "/editar/produtos/:id" , element: <EditarProdutos/>},
       {path: "/excluir/produtos/:id" , element: <ExcluirProdutos/>},
-      {path: "/adicionar/produtos" , element: <AddProd/>}
+      {path: "/cadastrar/produto" , element: <InserirProduto/>},
     ]}
 ])
 

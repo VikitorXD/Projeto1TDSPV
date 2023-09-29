@@ -1,30 +1,41 @@
-import { ListaProdutos } from "../components/ListaProdutos";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {AiFillEdit as Editar, AiOutlineDelete as Excluir} from "react-icons/ai";
 import classes from "./Produtos.module.css";
 import { useEffect, useState } from "react";
+import ModalInserir from "../components/ModalInserir";
 
 export default function Produtos() {
 
     document.title = "Lista de Produtos";
-    const [listaProdutoslocal, setlistaProdutoslocal] = useState([{}])
-    useEffect(()=>{
-      fetch('http://localhost:5000/produtos',{
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then((response)=> response.json())
-      .then((data)=>{
-          setlistaProdutoslocal(data);
-      }) 
-      .catch((err)=>console.log(err));
-    },[]);
-   
 
-    return 
+    const [listaProdutoLocal, setListaProdutoLocal] = useState([{}])
+
+    useEffect(()=>{
+
+        fetch('http://localhost:5000/produtos',{
+
+          method: 'GET',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+        }).then((response)=> response.json())
+        .then((data)=>{
+            setListaProdutoLocal(data);
+        })
+        .catch((err)=>console.log(err));
+      
+    },[]);
+
+    const [open, setOpen] = useState(false);
+
+    return (
       <div>
           <h1>LISTA DE PRODUTOS</h1>
+        
+        {open ? <ModalInserir open={open} setOpen={setOpen}/> : ""}
+
+      <button onClick={()=> setOpen(true)}>OPEN-MODAL</button>
+
         <div>
           <table className={classes.tableStyle}>
             <thead>
@@ -35,44 +46,45 @@ export default function Produtos() {
                 <th className={classes.tableHeaderStyle}>Preço</th>
                 <th className={classes.tableHeaderStyle}>Imagem</th>
                 <th className={classes.tableHeaderStyle}>Editar/Excluir</th>
-                <th className={classes.tableHeaderStyle}>Adicionar</th>
                 </tr>
             </thead>
             <tbody>
-              {exemplo.map((produto, index) => (
+              {listaProdutoLocal.map((produto, index) => (
                 <tr key={index} className={classes.tableLineStyle}>
                   <td className={classes.tableDataStyle}>{produto.id}</td>
                   <td className={classes.tableDataStyle}>{produto.nome}</td>
                   <td className={classes.tableDataStyle}>{produto.desc}</td>
                   <td className={classes.tableDataStyle}>{produto.preco}</td>
-                  <td className={classes.tableDataStyle}><img src={produto.img} alt={produto.desc} /></td>
+                  <td className={classes.tableDataStyle}><img src={produto.img} alt={produto.desc} width={100}/></td>
                   <td className={classes.tableDataStyle}><Link to={`/editar/produtos/${produto.id}`}><Editar/></Link> | <Link to={`/excluir/produtos/${produto.id}`}><Excluir/></Link></td>
                 </tr>
               ))} 
             </tbody>
-            <tr>
-            <td className={classes.tableDataStyle}><Link to={"/adicionar/produtos"}><button>adicionar Produtos</button></Link></td>
-            </tr>
             <tfoot>
               <tr>
-                <td colSpan="5" className={classes.tableDataStyle}>Total de Produtos: {ListaProdutos.length}</td>
+                <td colSpan="5" className={classes.tableDataStyle}>Total de Produtos: {listaProdutoLocal.length}</td>
               </tr>
             </tfoot>
           </table>
         </div>
 
       </div>
-    
+    )
   }
+
+  
+//   <div>
+//   <button onClick={()=> setCount(count + 1)}>COUNTER - {count}</button>
+// </div>
+
   
   // const [exemplo, setExemplo] = useState([{}]);
-
   // const [count, setCount] = useState(0);
 
   // useEffect(()=>{
   //   console.log("Use-Effect que será sempre renderizado!");
   // });
-
-//   <div>
-//   <button onClick={()=> setCount(count + 1)}>COUNTER - {count}</button>
-// </div>
+  
+  // useEffect(()=>{
+  //   console.log("Use-Effect que será renderizado o objeto ou componente ou elemento que está no array de depenências sofrer atualização.");
+  // },[count]);
