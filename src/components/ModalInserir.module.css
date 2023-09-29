@@ -19,6 +19,14 @@
         flex-direction: column;
         font-size: 2rem;
         margin: 5% 20%;
+        
+        & span{
+          float: right;  
+        }
+
+        & div{
+            clear: right;
+        }
 
         & input{
             font-size: 1.5rem;
