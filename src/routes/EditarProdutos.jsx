@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ListaProdutos } from "../components/ListaProdutos";
 
-export default function EditarProdutos(props) {
+export default function EditarProdutos() {
   const { id } = useParams();
-  const [listaLocalProdutos, setListaLocalProdutos] = useState([]);
+  const navigate = useNavigate();
+
   const [produto, setProduto] = useState({
     id: id,
     nome: "",
@@ -21,22 +21,22 @@ export default function EditarProdutos(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:5000/produtos", {
-      method: "POST",
+    fetch(`http://localhost:5000/produtos/${id}`, {
+      method: "PUT",
       body: JSON.stringify(produto),
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then(() => {
+        navigate("/produtos");
+      })
       .catch((error) => console.log(error));
-
-    // Você pode definir o estado ou fazer o que for necessário aqui
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/produtos", {
+    fetch(`http://localhost:5000/produtos/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -44,14 +44,14 @@ export default function EditarProdutos(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setListaLocalProdutos(data);
+        setProduto(data);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [id]);
 
   return (
     <div>
-      <h1>EditarProdutos</h1>
+      <h1>Editar Produto</h1>
       <div>
         <form onSubmit={handleSubmit}>
           <fieldset>
@@ -88,7 +88,7 @@ export default function EditarProdutos(props) {
               />
             </div>
             <div>
-              <button>EDITAR</button>
+              <button type="submit">EDITAR</button>
             </div>
           </fieldset>
         </form>
