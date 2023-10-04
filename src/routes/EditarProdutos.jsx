@@ -34,6 +34,7 @@ export default function EditarProdutos() {
       })
       .catch((error) => console.log(error));
   };
+  
 
   useEffect(() => {
     fetch(`http://localhost:5000/produtos/${id}`, {
