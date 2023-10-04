@@ -1,49 +1,53 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ListaProdutos } from "../components/ListaProdutos";
-import { useState } from "react";
 
-export default function EditarProdutos() {
-  //Utilizar o HOOK useParams() para recuperar o ID passado no path
+export default function EditarProdutos(props) {
   const { id } = useParams();
-
-  document.title = "EDITAR PRODUTOS " + id;
-
-  const navigate = useNavigate();
-
-  const produtoRetornadoDoFiltro = ListaProdutos.filter(
-    (produto) => produto.id == id
-  )[0];
-
-  //useState()
+  const [listaLocalProdutos, setListaLocalProdutos] = useState([]);
   const [produto, setProduto] = useState({
-    id: produtoRetornadoDoFiltro.id,
-    nome: produtoRetornadoDoFiltro.nome,
-    desc: produtoRetornadoDoFiltro.desc,
-    preco: produtoRetornadoDoFiltro.preco,
-    img: produtoRetornadoDoFiltro.img,
-    
+    id: id,
+    nome: "",
+    desc: "",
+    preco: "",
+    img: "",
   });
 
-  const handleChange = (event) =>{
-    //Destructuring
-    const {name, value} = event.target;
-    setProduto({...produto,[name]:value});
-  }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setProduto({ ...produto, [name]: value });
+  };
 
-  const handleSubmit = (event) =>{
-     event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-     let indice;
+    fetch("http://localhost:5000/produtos", {
+      method: "POST",
+      body: JSON.stringify(produto),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
 
-     ListaProdutos.forEach((item,index)=>{
-        if(item.id == id){
-          indice = index;
-        }
-     });
-     ListaProdutos.splice(indice,1,produto);
-     navigate("/produtos");
-  }
+    // Você pode definir o estado ou fazer o que for necessário aqui
+  };
 
+  useEffect(() => {
+    fetch("http://localhost:5000/produtos", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setListaLocalProdutos(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div>
@@ -55,11 +59,23 @@ export default function EditarProdutos() {
             <input type="hidden" name="id" value={produto.id} />
             <div>
               <label htmlFor="idProd">Nome do Produto</label>
-              <input type="text" name="nome" id="idProd" onChange={handleChange} value={produto.nome} />
+              <input
+                type="text"
+                name="nome"
+                id="idProd"
+                onChange={handleChange}
+                value={produto.nome}
+              />
             </div>
             <div>
               <label htmlFor="idDesc">Descrição</label>
-              <input type="text" name="desc" id="idDesc" onChange={handleChange} value={produto.desc} />
+              <input
+                type="text"
+                name="desc"
+                id="idDesc"
+                onChange={handleChange}
+                value={produto.desc}
+              />
             </div>
             <div>
               <label htmlFor="idPreco">Preço</label>
@@ -78,11 +94,11 @@ export default function EditarProdutos() {
         </form>
       </div>
 
-        <div>
-          <p>Nome : {produto.nome}</p>
-          <p>Desc : {produto.desc}</p>
-          <p>Preço : {produto.preco}</p>
-        </div>
+      <div>
+        <p>Nome : {produto.nome}</p>
+        <p>Desc : {produto.desc}</p>
+        <p>Preço : {produto.preco}</p>
+      </div>
     </div>
   );
 }

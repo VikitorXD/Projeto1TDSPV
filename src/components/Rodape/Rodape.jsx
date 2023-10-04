@@ -1,11 +1,13 @@
+import "./Rodape.scss"
+
 export default function Rodape() {
   return (
     <>
-      <footer>
+      <footer className=" ">
         <div>
           <ul>
             <li>
-              <a href="#">GitHub</a>
+              <a href="#" >GitHub</a>
             </li>
             <li>
               <a href="#">X</a>
