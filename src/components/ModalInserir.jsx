@@ -59,6 +59,7 @@ export default function ModalInserir(props) {
         <div>
           <form onSubmit={handleSubmit}>
             <fieldset>
+              <span onClick={()=> props.setOpen(false)}>X</span>
               <legend>Cadastrar Produto</legend>
               <div>
                 <label htmlFor="idProd">Nome do Produto</label>
