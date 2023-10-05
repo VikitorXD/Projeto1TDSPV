@@ -194,11 +194,11 @@ export default function EditarProdutos() {
 
       <div>
 
-        <p>Nome : {produto.nome}</p>
+        <p>NOME:      {produto.nome}</p>
 
-        <p>Desc : {produto.desc}</p>
+        <p>DESCRIÇÃO: {produto.desc}</p>
 
-        <p>Preço : {produto.preco}</p>
+        <p>PREÇO:     {produto.preco}</p>
 
       </div>
 
