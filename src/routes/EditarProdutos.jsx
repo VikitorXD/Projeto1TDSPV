@@ -114,13 +114,13 @@ export default function EditarProdutos() {
 
           <fieldset>
 
-            <legend>Produto Selecionado</legend>
+            <legend>PRODUTO SELECIONADO</legend>
 
             <input type="hidden" name="id" value={produto.id} />
 
             <div>
 
-              <label htmlFor="idProd">Nome do Produto</label>
+              <label htmlFor="idProd">Nome do Produto:</label>
 
               <input
 
@@ -140,7 +140,7 @@ export default function EditarProdutos() {
 
             <div>
 
-              <label htmlFor="idDesc">Descrição</label>
+              <label htmlFor="idDesc">Descrição:</label>
 
               <input
 
@@ -160,7 +160,7 @@ export default function EditarProdutos() {
 
             <div>
 
-              <label htmlFor="idPreco">Preço</label>
+              <label htmlFor="idPreco">Preço:</label>
 
               <input
 
