@@ -19,9 +19,16 @@ html {
  
 
     h1 {
-        margin-left: 60%;
+        margin-left: 40%;
         font-size: 1.5rem;
         font-family:'Times New Roman', Times, serif;
         font-weight: lighter;
     }
+
+    fieldset {
+        padding: 10px;
+        border: solid black 1px;
+        line-height: 30px;
+    }
+
 }
