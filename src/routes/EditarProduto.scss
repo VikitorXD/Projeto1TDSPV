@@ -30,11 +30,16 @@ html {
         line-height: 30px;
         margin-bottom: 20px;
         background-color: #499F68;
+        font-weight: bold;
     }
 
     label {
         padding-right: 10px;
         font-weight: bold;
+    }
+
+    legend {
+        background-color: white;
     }
 
     button {
